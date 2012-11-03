@@ -1,6 +1,11 @@
 *******************************************************************************
-Out of Eve 1.7 INC Installation Notes
- - http://www.outofeve.com/
+Out Of EVE Next Generation
+
+Code: https://github.com/glemsom/OutOfEve_NG
+
+*******************************************************************************
+Original project
+ - http://www.outofeve.com
  - http://code.google.com/p/ooe/
  - http://shrimpworks.za.net/
  - shrimp@shrimpworks.za.net
