@@ -1,0 +1,5 @@
+# Ignore config file
+includes/config.php
+
+# Images
+eveimages
