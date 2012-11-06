@@ -3,3 +3,9 @@ includes/config.php
 
 # Images
 eveimages
+
+# Cache folder
+cache
+
+# Smarty compiled templates
+templates/compiled
