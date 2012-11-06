@@ -39,7 +39,7 @@
         */
         function apiRequest($method, $user = null, $params = null, $printErrors = true) {
             $http = new cURL();
-            $http->setOption('CURLOPT_USERAGENT', 'Out of Eve (dev; shrimp@shrimpworks.za.net)');
+            $http->setOption('CURLOPT_USERAGENT', 'Out of Eve NG (dev; glemsom@gmail.com)');
             $http->setOption('CURLOPT_TIMEOUT', 45);
 
             $apiUrl = $GLOBALS['config']['eve']['api_url'];
@@ -49,8 +49,8 @@
                 $params = array();
 
             if ($user) {
-                $params['userID'] = $user[0];
-                $params['apiKey'] = $user[1];
+                $params['keyid'] = $user[0];
+                $params['vcode'] = $user[1];
                 if (isset($user[2]))
                     $params['characterID'] = $user[2];
             }
@@ -198,8 +198,8 @@
     }
 
     class eveAccount {
-        var $userId = '';
-        var $apiKey = '';
+        var $keyid = '';
+        var $vcode = '';
         var $characters = array();
         var $accountStatus = null;
         var $error = false;
@@ -207,9 +207,9 @@
 
         var $db = null;
 
-        function eveAccount($userId, $apiKey, $timeOffset = 0, $autoLoad = true) {
-            $this->userId = $userId;
-            $this->apiKey = $apiKey;
+        function eveAccount($keyid, $vcode, $timeOffset = 0, $autoLoad = true) {
+            $this->keyid = $keyid;
+            $this->vcode = $vcode;
             $this->timeOffset = $timeOffset * 3600;
 
             $this->db = new eveDB();
@@ -220,7 +220,7 @@
         }
 
         function getCharacters() {
-            $charData = new apiRequest('account/Characters.xml.aspx', array($this->userId, $this->apiKey));
+            $charData = new apiRequest('account/Characters.xml.aspx', array($this->keyid, $this->vcode));
             if ($charData->data) {
                 if ($charData->data->error)
                     $this->error = array('code' => (int)$charData->data->error['code'], 'message' => (string)$charData->data->error);
@@ -235,8 +235,8 @@
         }
 
         function getAccountStatus() {
-            $accData = new apiRequest('account/AccountStatus.xml.aspx', array($this->userId,
-                                                                               $this->apiKey));
+            $accData = new apiRequest('account/AccountStatus.xml.aspx', array($this->keyid,
+                                                                               $this->vcode));
 
             if (!$accData->data) {
                 return;
@@ -251,7 +251,7 @@
         }
 
         function checkFullAccess() {
-            $balanceTest = new apiRequest('char/AccountBalance.xml.aspx', array($this->userId, $this->apiKey, $this->characters[0]->characterID));
+            $balanceTest = new apiRequest('char/AccountBalance.xml.aspx', array($this->keyid, $this->vcode, $this->characters[0]->characterID));
             if ($balanceTest->data->error)
                 $this->error = array('code' => (int)$balanceTest->data->error['code'], 'message' => (string)$balanceTest->data->error);
         }

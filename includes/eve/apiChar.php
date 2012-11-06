@@ -54,8 +54,8 @@
         }
 
         function loadCharacter() {
-            $charData = new apiRequest('char/CharacterSheet.xml.aspx', array($this->account->userId,
-                                                                             $this->account->apiKey, 
+            $charData = new apiRequest('char/CharacterSheet.xml.aspx', array($this->account->keyid,
+                                                                             $this->account->vcode, 
                                                                              $this->characterID));
 
             if (!$charData->data)
@@ -87,16 +87,16 @@
             }
 
 
-            $trainingData = new apiRequest('char/SkillInTraining.xml.aspx', array($this->account->userId,
-                                                                                  $this->account->apiKey, 
+            $trainingData = new apiRequest('char/SkillInTraining.xml.aspx', array($this->account->keyid,
+                                                                                  $this->account->vcode, 
                                                                                   $this->characterID));
             if ($trainingData->data) {
                 $this->trainingSkill = new eveTrainingSkill($this->account, $this->db, $trainingData->data->result);
             }
 
 
-            $factionData = new apiRequest('char/FacWarStats.xml.aspx', array($this->account->userId,
-                                                                             $this->account->apiKey, 
+            $factionData = new apiRequest('char/FacWarStats.xml.aspx', array($this->account->keyid,
+                                                                             $this->account->vcode, 
                                                                              $this->characterID), null, false);
             if ($factionData->data) {
                 if ((!$factionData->data->error) && (!(int)$factionData->data->gotError))
@@ -112,8 +112,8 @@
         }
 
         function loadCorporation() {
-            $corpData = new apiRequest('corp/CorporationSheet.xml.aspx', array($this->account->userId,
-                                                                               $this->account->apiKey,
+            $corpData = new apiRequest('corp/CorporationSheet.xml.aspx', array($this->account->keyid,
+                                                                               $this->account->vcode,
                                                                                $this->characterID));
             if ($corpData->data && !$corpData->data->error) {
                 $this->corporation = new eveCorporation($this->account, $this, $corpData);
@@ -122,8 +122,8 @@
 
         function loadAssets($typeFilter = false) {
             if (count($this->assets) == 0) {
-                $assetData = new apiRequest('char/AssetList.xml.aspx', array($this->account->userId,
-                                                                             $this->account->apiKey, 
+                $assetData = new apiRequest('char/AssetList.xml.aspx', array($this->account->keyid,
+                                                                             $this->account->vcode, 
                                                                              $this->characterID),
                                                                        array('version' => 2));
                 if ($assetData->data) {
@@ -140,8 +140,8 @@
 
         function loadOrders() {
             if (count($this->orders) == 0) {
-                $orderData = new apiRequest('char/MarketOrders.xml.aspx', array($this->account->userId,
-                                                                                $this->account->apiKey, 
+                $orderData = new apiRequest('char/MarketOrders.xml.aspx', array($this->account->keyid,
+                                                                                $this->account->vcode, 
                                                                                 $this->characterID),
                                                                           array('version' => 2));
 
@@ -165,8 +165,8 @@
             }
 
             if ((count($this->transactions) == 0) || ($fromID > 0)) {
-                $transData = new apiRequest('char/WalletTransactions.xml.aspx', array($this->account->userId,
-                                                                                      $this->account->apiKey, 
+                $transData = new apiRequest('char/WalletTransactions.xml.aspx', array($this->account->keyid,
+                                                                                      $this->account->vcode, 
                                                                                       $this->characterID),
                                                                                 $params);
                 if ($transData->data) {
@@ -200,8 +200,8 @@
             }
 
             if ((count($this->journalItems) == 0) || ($fromID > 0)) {
-                $journalData = new apiRequest('char/WalletJournal.xml.aspx', array($this->account->userId,
-                                                                                   $this->account->apiKey, 
+                $journalData = new apiRequest('char/WalletJournal.xml.aspx', array($this->account->keyid,
+                                                                                   $this->account->vcode, 
                                                                                    $this->characterID),
                                                                              $params);
 
@@ -230,8 +230,8 @@
 
         function loadIndustryJobs() {
             if (count($this->industryJobs) == 0) {
-                $jobData = new apiRequest('char/IndustryJobs.xml.aspx', array($this->account->userId,
-                                                                              $this->account->apiKey, 
+                $jobData = new apiRequest('char/IndustryJobs.xml.aspx', array($this->account->keyid,
+                                                                              $this->account->vcode, 
                                                                               $this->characterID),
                                                                         array('version' => 2));
                 if ($jobData->data) {
@@ -247,8 +247,8 @@
         }
 
         function loadKills() {
-            $killData = new apiRequest('char/KillLog.xml.aspx', array($this->account->userId,
-                                                                      $this->account->apiKey, 
+            $killData = new apiRequest('char/KillLog.xml.aspx', array($this->account->keyid,
+                                                                      $this->account->vcode, 
                                                                       $this->characterID),
                                                                 array('version' => 2));
 
@@ -268,8 +268,8 @@
 
         function loadMail() {
             if (count($this->mail) == 0) {
-                $mailData = new apiRequest('char/MailMessages.xml.aspx', array($this->account->userId,
-                                                                               $this->account->apiKey,
+                $mailData = new apiRequest('char/MailMessages.xml.aspx', array($this->account->keyid,
+                                                                               $this->account->vcode,
                                                                                $this->characterID),
                                                                          array('version' => 2));
                 if ($mailData->data) {
@@ -325,8 +325,8 @@
 
         function getMailMessage($message) {
             $result = false;
-            $mailData = new apiRequest('char/MailBodies.xml.aspx', array($this->account->userId,
-                                                                         $this->account->apiKey,
+            $mailData = new apiRequest('char/MailBodies.xml.aspx', array($this->account->keyid,
+                                                                         $this->account->vcode,
                                                                          $this->characterID),
                                                                    array('version' => 2,
                                                                          'ids' => $message->messageID));
@@ -348,8 +348,8 @@
 
         function loadNotifications() {
             if (count($this->notifications) == 0) {
-                $notificationData = new apiRequest('char/Notifications.xml.aspx', array($this->account->userId,
-                                                                                        $this->account->apiKey,
+                $notificationData = new apiRequest('char/Notifications.xml.aspx', array($this->account->keyid,
+                                                                                        $this->account->vcode,
                                                                                         $this->characterID),
                                                                                   array('version' => 2));
                 if ($notificationData->data) {
@@ -362,8 +362,8 @@
                     }
                 }
 
-                $notificationData = new apiRequest('char/ContactNotifications.xml.aspx', array($this->account->userId,
-                                                                                        $this->account->apiKey,
+                $notificationData = new apiRequest('char/ContactNotifications.xml.aspx', array($this->account->keyid,
+                                                                                        $this->account->vcode,
                                                                                         $this->characterID),
                                                                                   array('version' => 2));
                 if ($notificationData->data) {
@@ -408,8 +408,8 @@
 
         function getNotificationText($notification) {
             $result = false;
-            $notificationData = new apiRequest('char/NotificationTexts.xml.aspx', array($this->account->userId,
-                                                                                    $this->account->apiKey,
+            $notificationData = new apiRequest('char/NotificationTexts.xml.aspx', array($this->account->keyid,
+                                                                                    $this->account->vcode,
                                                                                     $this->characterID),
                                                                                   array('version' => 2,
                                                                                     'ids' => $notification->notificationID));
@@ -445,8 +445,8 @@
 
         function loadSkillQueue() {
             if ($this->skillQueue == null) {
-                $skillQueueData = new apiRequest('char/SkillQueue.xml.aspx', array($this->account->userId,
-                                                                             $this->account->apiKey,
+                $skillQueueData = new apiRequest('char/SkillQueue.xml.aspx', array($this->account->keyid,
+                                                                             $this->account->vcode,
                                                                              $this->characterID),
                                                                              array('version' => 2));
               if ($skillQueueData->data) {

@@ -115,20 +115,20 @@
         return $key;
     }
 
-    function encryptKey($apiKey) {
+    function encryptKey($vcode) {
         if (!empty($GLOBALS['config']['site']['keypass'])) {
-            $result = enc_encrypt($apiKey, getKey());
+            $result = enc_encrypt($vcode, getKey());
         } else {
-            $result = $apiKey;
+            $result = $vcode;
         }
         return $result;
     }
 
-    function decryptKey($apiKey) {
-        if (!empty($GLOBALS['config']['site']['keypass']) && (substr($apiKey, -1) == '=')) {
-            $result = enc_decrypt($apiKey, getKey());
+    function decryptKey($vcode) {
+        if (!empty($GLOBALS['config']['site']['keypass']) && (substr($vcode, -1) == '=')) {
+            $result = enc_decrypt($vcode, getKey());
         } else {
-            $result = $apiKey;
+            $result = $vcode;
         }
         return $result;
     }

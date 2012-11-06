@@ -135,8 +135,8 @@
         function loadDetail($db, $corp) {
             $this->loadFuelRequired($db);
 
-            $starbaseData = new apiRequest('corp/StarbaseDetail.xml.aspx', array($corp->account->userId,
-                                                                                 $corp->account->apiKey, 
+            $starbaseData = new apiRequest('corp/StarbaseDetail.xml.aspx', array($corp->account->keyid,
+                                                                                 $corp->account->vcode, 
                                                                                  $corp->character->characterID),
                                                                            array('version' => 2, 'itemID' => $this->itemID));
 

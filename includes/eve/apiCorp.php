@@ -55,8 +55,8 @@
 
         function loadCorp($corpData = false) {
             if (!$corpData) {
-                $corpData = new apiRequest('corp/CorporationSheet.xml.aspx', array($this->account->userId,
-                                                                   $this->account->apiKey,
+                $corpData = new apiRequest('corp/CorporationSheet.xml.aspx', array($this->account->keyid,
+                                                                   $this->account->vcode,
                                                                    $this->character->characterID));
             }
 
@@ -104,8 +104,8 @@
         }
 
         function loadBalances() {
-            $balanceData = new apiRequest('corp/AccountBalance.xml.aspx', array($this->account->userId,
-                                                                                   $this->account->apiKey,
+            $balanceData = new apiRequest('corp/AccountBalance.xml.aspx', array($this->account->keyid,
+                                                                                   $this->account->vcode,
                                                                                    $this->character->characterID));
 
             if ($balanceData->data) {
@@ -125,8 +125,8 @@
 
         function loadMembers($full = false) {
             if (count($this->members) == 0) {
-                $memberData = new apiRequest('corp/MemberTracking.xml.aspx', array($this->account->userId,
-                                                                                   $this->account->apiKey,
+                $memberData = new apiRequest('corp/MemberTracking.xml.aspx', array($this->account->keyid,
+                                                                                   $this->account->vcode,
                                                                                    $this->character->characterID));
 
                 if ($memberData->data) {
@@ -152,8 +152,8 @@
 
         function loadAssets($typeFilter = false) {
             if (count($this->assets) == 0) {
-                $assetData = new apiRequest('corp/AssetList.xml.aspx', array($this->account->userId,
-                                                                             $this->account->apiKey, 
+                $assetData = new apiRequest('corp/AssetList.xml.aspx', array($this->account->keyid,
+                                                                             $this->account->vcode, 
                                                                              $this->character->characterID),
                                                                        array('version' => 2));
 
@@ -172,8 +172,8 @@
 
         function loadOrders($accountKey = 0) {
             if (count($this->orders) == 0) {
-                $orderData = new apiRequest('corp/MarketOrders.xml.aspx', array($this->account->userId,
-                                                                                $this->account->apiKey, 
+                $orderData = new apiRequest('corp/MarketOrders.xml.aspx', array($this->account->keyid,
+                                                                                $this->account->vcode, 
                                                                                 $this->character->characterID),
                                                                           array('version' => 2));
 
@@ -207,8 +207,8 @@
             }
 
             if ((count($this->journalItems) == 0) || ($fromID > 0)) {
-                $journalData = new apiRequest('corp/WalletJournal.xml.aspx', array($this->account->userId,
-                                                                                   $this->account->apiKey, 
+                $journalData = new apiRequest('corp/WalletJournal.xml.aspx', array($this->account->keyid,
+                                                                                   $this->account->vcode, 
                                                                                    $this->character->characterID),
                                                                              $params);
                 if ($journalData->data) {
@@ -242,8 +242,8 @@
             }
 
             if ((count($this->transactions) == 0) || ($fromID > 0)) {
-                $transData = new apiRequest('corp/WalletTransactions.xml.aspx', array($this->account->userId,
-                                                                                      $this->account->apiKey, 
+                $transData = new apiRequest('corp/WalletTransactions.xml.aspx', array($this->account->keyid,
+                                                                                      $this->account->vcode, 
                                                                                       $this->character->characterID),
                                                                                 $params);
                 if ($transData->data) {
@@ -270,8 +270,8 @@
 
         function loadIndustryJobs() {
             if (count($this->industryJobs) == 0) {
-                $jobData = new apiRequest('corp/IndustryJobs.xml.aspx', array($this->account->userId,
-                                                                              $this->account->apiKey, 
+                $jobData = new apiRequest('corp/IndustryJobs.xml.aspx', array($this->account->keyid,
+                                                                              $this->account->vcode, 
                                                                               $this->character->characterID),
                                                                         array('version' => 2));
                 if ($jobData->data) {
@@ -294,8 +294,8 @@
         }
 
         function loadKills($beforeID = 0) {
-            $killData = new apiRequest('corp/KillLog.xml.aspx', array($this->account->userId,
-                                                                      $this->account->apiKey, 
+            $killData = new apiRequest('corp/KillLog.xml.aspx', array($this->account->keyid,
+                                                                      $this->account->vcode, 
                                                                       $this->character->characterID),
                                                                 array('version' => 2));
 
@@ -315,8 +315,8 @@
         }
 
         function loadStarbases($full = true) {
-            $starbaseData = new apiRequest('corp/StarbaseList.xml.aspx', array($this->account->userId,
-                                                                               $this->account->apiKey, 
+            $starbaseData = new apiRequest('corp/StarbaseList.xml.aspx', array($this->account->keyid,
+                                                                               $this->account->vcode, 
                                                                                $this->character->characterID),
                                                                          array('version' => 2));
 

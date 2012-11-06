@@ -54,13 +54,13 @@
                     $timeOffset = $tz->getOffset($dt) / 3600;
                     
                     if ($this->site->user->account->id > 0) {
-                        if (substr($this->site->user->account->apikey, -1) != '=') {
-                            $this->site->user->account->apikey = encryptKey($this->site->user->account->apikey);
+                        if (substr($this->site->user->account->vcode, -1) != '=') {
+                            $this->site->user->account->vcode = encryptKey($this->site->user->account->vcode);
                             $this->site->user->account->save();
                         }
                     }
 
-                    $this->site->eveAccount = new eveAccount(trim($this->site->user->account->apiuser), trim(decryptKey($this->site->user->account->apikey)), $timeOffset);
+                    $this->site->eveAccount = new eveAccount(trim($this->site->user->account->keyid), trim(decryptKey($this->site->user->account->vcode)), $timeOffset);
 
                     if ($this->site->user->account->id > 0)
                         $this->forceMenus = $this->site->user->account->get_showmenus_list('id');
@@ -277,19 +277,19 @@
                         'corpStarbases' => array('Corporation Starbases', $this->hasForcedMenu('corpStarbases')),
                     );
 
-                $a->apikey = decryptKey($a->apikey);
+                $a->vcode = decryptKey($a->vcode);
                 $a = objectToArray($a, array('DBManager'));
                 return $this->render('account_edit', array('a' => $a, 'error' => false, 'forcemenus' => $forceMenus));
             } else if (isset($_POST['id'])) {
                 $a = $this->db->getObject('account', $_POST['id']);
-                $a->apikey = decryptKey($a->apikey);
+                $a->vcode = decryptKey($a->vcode);
                 if (($a->id > 0) && ($a->user_id != $this->site->user->id))
                     return $this->accountsList("Selected account doesn't belong to you!");
 
-                $_POST['apiuser'] = trim($_POST['apiuser']);
-                $_POST['apikey'] = trim($_POST['apikey']);
+                $_POST['keyid'] = trim($_POST['keyid']);
+                $_POST['vcode'] = trim($_POST['vcode']);
 
-                $eveAcc = new eveAccount($_POST['apiuser'], $_POST['apikey']);
+                $eveAcc = new eveAccount($_POST['keyid'], $_POST['vcode']);
                 if ($eveAcc->error)
                     return $this->render('account_edit', array('a' => objectToArray($a, array('DBManager')), 'error' => $eveAcc->error));
                 $eveAcc->checkFullAccess();
@@ -298,10 +298,9 @@
                 if (!$eveAcc->error) {
                     $a->user_id = $this->site->user->id;
                     $a->name = $_POST['name'];
-                    $a->apiuser = $_POST['apiuser'];
-                    $a->apikey = encryptKey($_POST['apikey']);
+                    $a->keyid = $_POST['keyid'];
+                    $a->vcode = encryptKey($_POST['vcode']);
                     $a->precache = isset($_POST['precache']) ? 1 : 0;
-
                     if ($a->id > 0) {
                         if ($this->forceMenus) {
                             for ($i = 0; $i < count($this->forceMenus); $i++) {
@@ -338,7 +337,7 @@
             $wasErrors = $GLOBALS['EVEAPI_NO_ERRORS'];
             $GLOBALS['EVEAPI_NO_ERRORS'] = true;
             for ($i = 0; $i < count($accounts); $i++) {
-                $eveAcc = new eveAccount(trim($accounts[$i]['row']['apiuser']), trim(decryptKey($accounts[$i]['row']['apikey'])), 0, false);
+                $eveAcc = new eveAccount(trim($accounts[$i]['row']['keyid']), trim(decryptKey($accounts[$i]['row']['vcode'])), 0, false);
                 $eveAcc->getAccountStatus();
                 $accounts[$i]['account'] = objectToArray($eveAcc, array('DBManager'));
             }

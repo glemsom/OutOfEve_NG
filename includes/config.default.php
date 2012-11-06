@@ -49,7 +49,7 @@
         EVE API and paths, for caching, themes, etc.
     *************************************************************************/
     $config['eve']['cache_dir'] = dirname(__FILE__).'/../cache/';
-    $config['eve']['api_url'] = 'http://api.eve-online.com';
+    $config['eve']['api_url'] = 'https://api.eve-online.com';
     $config['eve']['method'] = 'POST';
     $config['eve']['journal_records'] = 2560;
     $config['eve']['transaction_records'] = 2560;

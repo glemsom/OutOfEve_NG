@@ -8,11 +8,11 @@
 <h2>{if $a.row.id}Edit{else}New{/if} Account</h2>
   <label>Account Name:</label>
     <input type="text" name="name" value="{$a.row.name}" /><br />
-  <label id="_uid">EVE API User ID:</label>
-    <input type="text" name="apiuser" value="{$a.row.apiuser}" /><br />
-  <label id="_api">EVE API <b>Full Access</b> Key:</label>
-    <input type="text" name="apikey" value="{$a.row.apikey}" /><br />
-  <label></label><span>Your API User ID and <b>Full Access</b> API Key can be found <a href="http://myeve.eve-online.com/api/">here</a>.</span><br /><br />
+  <label id="_uid">EVE API Key ID:</label>
+    <input type="text" name="keyid" value="{$a.row.keyid}" /><br />
+  <label id="_api">EVE API Verification Code</b></label>
+    <input type="text" name="vcode" value="{$a.row.vcode}" /><br />
+  <label></label><span>Your API Key ID and API Verification Code can be found <a href="https://support.eveonline.com/api/">here</a>.</span><br /><br />
   <label>&nbsp;</label><input type="checkbox" name="precache" value="1" {if $a.row.precache > 0}checked="checked"{/if} style="width: 20px" /> Enable precaching<br />
   <label></label><span>Enabling precaching will allow this account's selected character's API data to be pre-loaded, allowing smother loading of pages.</span><br /><br />
 

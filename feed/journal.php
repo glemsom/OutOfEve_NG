@@ -15,7 +15,7 @@
             $this->db = $site->db;
             $this->site = $site;
 
-            $query = "select id, user_id, apiuser from account where md5(concat('journal', id, 'u', user_id)) = ?";
+            $query = "select id, user_id, keyid from account where md5(concat('journal', id, 'u', user_id)) = ?";
             $acc = $this->db->QueryA($query, array($id));
 
             if ($acc) {
@@ -47,7 +47,7 @@
                     // load up all the journal and API stuff
                     $this->site->user = $this->db->getObject('user', $acc[0]['user_id']);
                     $this->site->user->account = $this->db->getObject('account', $acc[0]['id']);
-                    $this->site->eveAccount = new eveAccount(trim($this->site->user->account->apiuser), trim(decryptKey($this->site->user->account->apikey)), 0);
+                    $this->site->eveAccount = new eveAccount(trim($this->site->user->account->keyid), trim(decryptKey($this->site->user->account->vcode)), 0);
                     for ($i = 0; $i < count($this->site->eveAccount->characters); $i++)
                         if ($this->site->eveAccount->characters[$i]->characterID == $this->site->user->account->character_id)
                             $this->site->character = $this->site->eveAccount->characters[$i];

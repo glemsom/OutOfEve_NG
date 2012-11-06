@@ -9,7 +9,7 @@
     }
 
     function quickRequest($method, $account, $params = null) {
-        $data = new apiRequest($method, array($account->apiuser, trim(decryptKey($account->apikey)), $account->character_id), $params, false);
+        $data = new apiRequest($method, array($account->keyid, trim(decryptKey($account->vcode)), $account->character_id), $params, false);
     }
 
     $db = new DBManager($GLOBALS['config']['database']);
