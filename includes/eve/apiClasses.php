@@ -655,4 +655,48 @@
         }
     }
 
+    class eveContract {
+        var $contractID = 0;
+        var $issuerID = 0;
+        var $issuerCorpID = 0;
+
+        var $assigneeID = 0;
+        var $acceptorID = 0;
+        var $startStationID = 0;
+	var $endStationID = 0;
+
+        var $type = null;
+        var $status = null;
+        var $title = array();
+
+        var $forCorp = array();
+        var $availability = null;
+
+	var $dateIssued = null;
+	var $dateExpired = null;
+	var $dataAccepted = null;
+	var $dateCompleted = null;
+	var $numDays = 0;
+
+	var $price = 0;
+	var $reward = 0;
+	var $collateral = 0;
+	var $buyout = 0;
+	var $volume = 0;
+
+	var $items;
+
+        function eveContract($charID, $db, $contract, $items) {
+		foreach($contract->attributes() as $attr)
+		{
+			$name = $attr->getName();
+			$this->$name = (string)$attr;
+		}
+		if (($this->acceptorID == $charID || $this->assigneeID == $charID) && $this->forCorp == 0)
+			$this->price = $this->price * -1;
+		$this->items = $items;
+        }
+    }
+
+
 ?>
