@@ -37,7 +37,7 @@
         <div style="display:none" id="{$lol.contractID}">
 <table width=100% border=0>
           {foreach from=$lol.items item=ass}
-		<tr><td width="10%">{$ass.quantity}</td><td width="30%">{$ass.itemname}</td></tr>
+		<tr><td width="10%"><img src="{$site_url}/eveimages/types/{$ass.item}_32.png" alt="{$ass.itemname}" align="absmiddle" />{$ass.quantity}</td><td width="30%">{$ass.itemname}</td></tr>
           {/foreach}
 </table>
         </div>
