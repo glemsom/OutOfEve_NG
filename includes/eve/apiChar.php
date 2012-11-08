@@ -334,7 +334,7 @@
                 if (!$mailData->data->error) {
                     foreach ($mailData->data->result->rowset->row as $mail) {
                         if ((int)$mail['messageID'] == $message->messageID) {
-                            $result = new eveMailMessageBody($this->account, $mail);
+                            $result = new eveMailMessageBody($this->account, strip_tags($mail, "<br><a>"));
                             $result->headers = $message;
                         }
                     }
