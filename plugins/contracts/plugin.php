@@ -7,7 +7,7 @@
         function contracts($db, $site) {
             $this->Plugin($db, $site);
 
-            $this->site->plugins['mainmenu']->addLink('main', 'Contracts', '?module=contracts', 'icon07_13');
+            $this->site->plugins['mainmenu']->addLink('main', 'Contracts', '?module=contracts', 'icon17_02');
 /*
             if (($this->site->plugins['mainmenu']->hasGroup('corp')) 
                     && ($this->site->character->corpMember->hasRole('corpRoleDirector')
