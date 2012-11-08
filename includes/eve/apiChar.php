@@ -540,5 +540,56 @@
             return $result;
         }
 
+	function loadContracts()
+	{
+            $contracts = new apiRequest('char/Contracts.xml.aspx', array($this->account->keyid,
+                                                                         $this->account->vcode,
+                                                                         $this->characterID),
+                                                                         array('version' => 2)
+									 );
+
+            if ($contracts->data) {
+                if (!$contracts->data->error) {
+                    foreach ($contracts->data->result->rowset->row as $contract) {
+			$items = array();
+			$contractID = (string)$contract->attributes()->contractID;
+
+				if ((string)$contract->attributes()->type == 'Courier')
+				{
+					$items = array();
+				} else {
+			            $itemdata = new apiRequest('char/ContractItems.xml.aspx', array($this->account->keyid,
+                                                                             $this->account->vcode,
+                                                                      $this->characterID),
+                                                                array('version' => 2, 'contractID'=>$contractID));
+
+			            if ($itemdata->data) {
+			                if ($itemdata->data->error) {
+			                    apiError('char/ContractItems.xml.aspx ('.$contractID.')', $items->data->error);
+			                } else {
+						foreach ($itemdata->data->result->rowset->row as $itemrow)
+						{
+
+							$dbItem = $this->db->eveItem((string)$itemrow->attributes()->typeID);
+
+							$items[] = array(
+								"item"=>(string)$itemrow->attributes()->typeID,
+								"itemname"=>$dbItem->typename,
+								"quantity"=>(int)$itemrow->attributes()->quantity
+									);
+						}
+					}
+			            }
+				}
+
+				$c = new eveContract($this->characterID, $this->db, $contract, $items);
+                        	$this->contracts[] = $c;
+                    }
+                } else {
+                    apiError('char/Contracts.xml.aspx', $contracts->data->error);
+                }
+            }
+	}
+
     }
 ?>

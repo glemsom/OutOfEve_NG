@@ -1,0 +1,64 @@
+<div id="assetList">
+  <div class="listOptions">
+<form method="GET" id="searchForm" name="searchForm">
+<input type="hidden" name="module" value="contracts">
+<span>Status: {html_options name=status options=$statusSelect selected=$selectedStatus onChange="document.searchForm.submit();"}</span>
+<span>Type: {html_options name=type options=$typeSelect selected=$selectedType onChange="document.searchForm.submit();"}</span>
+<span>Timeframe: {html_options name=time options=$timeSelect selected=$selectedTime onChange="document.searchForm.submit();"}</span>
+</form>
+  </div>
+  {if $pageCount > 0}
+  <div align="right">
+    {if $prevPage < $pageNum}
+      <button onclick="window.location='{$site_url}/?module=assets{if $corp}&corp=1{/if}&p={$prevPage}'" class="pageNav"> &lt;&lt; </button>
+    {/if}
+    &nbsp; pg {$pageNum+1} / {$pageCount} &nbsp;
+    {if $nextPage < $pageCount}
+      <button onclick="window.location='{$site_url}/?module=assets{if $corp}&corp=1{/if}&p={$nextPage}'" class="pageNav"> &gt;&gt; </button>
+    {/if}
+  </div>
+  {/if}
+
+<table width="100%" border="0">
+  <tr>
+    <th width="10%">ContractID</th>
+    <th width="30%">Title</th>
+    <th width="10%">Status</th>
+    <th width="10%">Date issued</th>
+    <th width="10%">Price</th>
+  </tr>
+
+  {foreach from=$contracts item=lol}
+
+<tr class="groupHead shadeDark borderDark textLight" onclick="toggleAssets('{$lol.contractID}')" >
+<td>{$lol.contractID}<br>{$lol.type}</td><td>{$lol.title}</td><td>{$lol.status}</td><td>{$lol.dateIssued}</td><td>{$lol.price|eveNum}</td></tr>
+
+<tr><td colspan="3">
+        <div style="display:none" id="{$lol.contractID}">
+<table width=100% border=0>
+          {foreach from=$lol.items item=ass}
+		<tr><td width="10%">{$ass.quantity}</td><td width="30%">{$ass.itemname}</td></tr>
+          {/foreach}
+</table>
+        </div>
+</td></tr>
+  {/foreach}
+</table>
+
+  {if !$contracts}
+    <h3>{if $corp}Your corporation has{else}You have{/if} no contracts!</h3>
+  {/if}
+
+</div>
+
+{literal}
+<script>
+  function toggleAssets(id) {
+    var ass = document.getElementById(id);
+    if (ass.style.display == '')
+      ass.style.display = 'none';
+    else
+      ass.style.display = '';
+  }
+</script>
+{/literal}
