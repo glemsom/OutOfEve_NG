@@ -4,9 +4,9 @@
         <!--img src="{$site_url}/templates/{$theme}/images/tree_{if $last}end{else}branch{/if}.png" align="absmiddle"/-->
         <a href="#" onclick="showInfo('{$asset.item.typeid}');return false;" title="{$ass.item.typename}">
             {if $asset.item.typeGraphic}
-            <img src="{$site_url}/eveimages/types/32/{$asset.item.typeid}.png" alt="{$asset.item.typename}" align="absmiddle" />
+            <img src="{$site_url}/eveimages/types/{$asset.item.typeid}_32.png" alt="{$asset.item.typename}" align="absmiddle" />
             {else}
-            <img src="{$site_url}/eveimages/icons/32/icon{$asset.item.icon}.png" alt="{$asset.item.typename}" align="absmiddle" />
+            <img src="{$site_url}/eveimages/types/{$asset.item.typeid}_32.png" alt="{$asset.item.typename}" align="absmiddle" />
             {/if}
         </a>
         {$asset.item.typename}</td>
