@@ -69,6 +69,7 @@
                                         'corporation',
                                         'mail',
                                         'assets',
+                                        'contracts',
                                         'transactions',
                                         'journal',
                                         'orders',
