@@ -94,7 +94,7 @@
                 $this->trainingSkill = new eveTrainingSkill($this->account, $this->db, $trainingData->data->result);
             }
 
-
+/*
             $factionData = new apiRequest('char/FacWarStats.xml.aspx', array($this->account->keyid,
                                                                              $this->account->vcode, 
                                                                              $this->characterID), null, false);
@@ -102,7 +102,7 @@
                 if ((!$factionData->data->error) && (!(int)$factionData->data->gotError))
                     $this->faction = new eveCharacterFaction($this->account, $this->db, $factionData->data->result);
             }
-
+ */
             $training = $this->getSkill($this->trainingSkill->typeID);
             if ($training && ($training != $this->trainingSkill)) {
                 $training->inTraining = $this->trainingSkill->inTraining;
@@ -112,12 +112,14 @@
         }
 
         function loadCorporation() {
+/*
             $corpData = new apiRequest('corp/CorporationSheet.xml.aspx', array($this->account->keyid,
                                                                                $this->account->vcode,
                                                                                $this->characterID));
             if ($corpData->data && !$corpData->data->error) {
                 $this->corporation = new eveCorporation($this->account, $this, $corpData);
             }
+ */
         }
 
         function loadAssets($typeFilter = false) {
